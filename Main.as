@@ -1,6 +1,9 @@
 [Setting category="Display Settings" name="Window visible" description="To move the table, click and drag while the Openplanet overlay is visible."]
 bool windowVisible = true;
 
+[Setting category="Display Settings" name="Hide if UI is hidden" description="If enabled, the points window will hide if the UI is hidden"]
+bool hideWhenUiHidden = true;
+
 class PlayerScore {
     string name;
     int points;
@@ -22,6 +25,10 @@ void SortPlayers()
 }
 
 void Render() {
+    if (hideWhenUiHidden && !UI::IsGameUIVisible()) {
+        return;
+    }
+
     auto app = cast<CTrackMania>(GetApp());
     auto network = cast<CTrackManiaNetwork>(app.Network);
     auto server_info = cast<CTrackManiaNetworkServerInfo>(network.ServerInfo);
